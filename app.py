@@ -38,8 +38,11 @@ class App:
             self.options.update({"video": option})
 
     def debug(self):
+        self.get_youtubeObject()
+        self.getTitle()
+        self.getDestination()
         self.getBestBitrate()
-        print(self.currentFile.filesize/1_048_576)
+        self.currentFile.download(output_path=self.destination, filename=self.title)
         pass
 
 
@@ -48,6 +51,7 @@ class App:
             if self.entry.get() == '':
                 raise ValueError
             self.youtubeObject = YouTube(self.entry.get(),
+                                         client="WEB",
                                          on_progress_callback=self.on_progress,
                                          use_po_token=True
                                          )
